@@ -22,6 +22,10 @@ module.exports = env => {
         module: {
             rules: [
                 {
+                    test: /\.(png|jp?eg|gif|svg)$/i,
+                    type: 'asset/resource'
+                },
+                {
                     test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     resolve: {
@@ -32,11 +36,11 @@ module.exports = env => {
                     }
                 },
                 {
-                    test: /\.scss$/,
+                    test: /\.css$/,
                     use: [
                         MinCssExtractPlugin.loader,
                         'css-loader',
-                        'sass-loader'
+                        'postcss-loader'
                     ]
                 }
             ]
