@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import App from '../App';
+import ComingSoon from '../ComingSoon';
 
 test('First Test', () => {
-    render(<App />);
+    render(<ComingSoon />);
 
-    expect(screen.getByText('Hello From React!')).toBeInTheDocument();
+    expect(screen.getByText(/coming soon/i)).toBeVisible();
 });
