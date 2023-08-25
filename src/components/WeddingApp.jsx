@@ -17,7 +17,7 @@ const WeddingApp = () => {
                     <div
                         className="w-full h-full flex-col flex gap-y-5 justify-center items-center backdrop-brightness-50">
                         <h1 className="text-white text-6xl font-cormorant md:text-9xl">Karly &amp; Luis</h1>
-                        <p className="mt-3 md:mt-6 text-white text-4xl font-cormorant md:text-6xl">November 2023</p>
+                        <p className="mt-3 md:mt-6 text-white text-4xl font-cormorant md:text-6xl">November 17, 2023</p>
                     </div>
                 </div>
             </section>

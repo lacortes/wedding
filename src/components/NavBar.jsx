@@ -20,7 +20,7 @@ const NavItems = ({ className, getDropdownHeight = () => {} }) => {
             <li className="py-2 text-white hover">
                 item 3
             </li>
-            <li className="py2">
+            <li className="py2 mb-3 mt-1">
                 <button
                     className="border-solid border-2 border-sage-light hover:bg-sage-light hover:text-black hover:rounded-md font-medium text-white tracking-widest rounded p-1 px-2 mb-3transition-all duration-300 ease-in"
                 >
