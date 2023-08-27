@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const schema = Yup.object({
     firstName: Yup.string()
         .trim()
-        .matches(/[a-zA-Z]/, { message: 'Only letters' })
+        .matches(/^[a-zA-Z]*$/, { message: 'Only letters allowed' })
         .min(3)
         .required('Required'),
     lastName: Yup.string()
@@ -25,6 +25,7 @@ const PrimaryGuest = () => {
     const navigate = useNavigate();
     const [ submitError, setSubmitError ] = useState('');
     const [ submitSuccess, setSubmitSuccess ] = useState(false);
+    const [ blockSubmissions, setBlockSubmissions ] = useState(false);
 
     const handleAttending = (values) => {
         sessionStorage.removeItem('name');
@@ -35,6 +36,7 @@ const PrimaryGuest = () => {
 
                 if (dbRsvp !== 'PENDING') {
                     setSubmitError('Please contact Karly or Luis to update your RSVP');
+                    setBlockSubmissions(true);
                 } else {
                     await dispatch(updateGuest({
                         firstName: values.firstName,
@@ -48,8 +50,8 @@ const PrimaryGuest = () => {
                         navigate('/rsvp/party');
                     }
                 }
-
                 setSubmitSuccess(true);
+
             } catch (code) {
                 if (code === 404) {
                     setSubmitError('Guest not found!');
@@ -191,8 +193,11 @@ const PrimaryGuest = () => {
                     (
                         <button
                             type="submit"
-                            className="flex justify-center items-center gap-x-2 rounded-md border-2 border-solid border-sage-dark px-3.5 py-2.5 text-sm font-semibold text-sage-dark shadow-sm hover:bg-sage-light hover:border-sage-light hover:text-[#475E4A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage"
-                            disabled={isSubmitting}
+                            className="flex justify-center items-center gap-x-2 rounded-md border-2 border-solid border-sage-dark
+                            px-3.5 py-2.5 text-sm font-semibold text-sage-dark shadow-sm hover:bg-sage-light hover:border-sage-light
+                            hover:text-[#475E4A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                            focus-visible:outline-sage disabled:opacity-60"
+                            disabled={isSubmitting || blockSubmissions}
                         >
                             Next
                             <ChevronDoubleRightIcon className="-mr-0.5 h-5 w-5" aria-hidden="true"/>
@@ -203,7 +208,7 @@ const PrimaryGuest = () => {
                         <button
                             type="submit"
                             className="block w-full rounded-md bg-sage-dark px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#475E4A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage disabled:opacity-60"
-                            disabled={isSubmitting || submitSuccess}
+                            disabled={isSubmitting || submitSuccess || blockSubmissions}
                         >
                             {submitSuccess ? 'Thank You!' : 'Submit' }
                         </button>
