@@ -8,6 +8,9 @@ import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import PrimaryGuest from './rsvp/PrimaryGuest';
 import SecondaryGuests from './rsvp/SecondaryGuests';
+import MenuSelection from './rsvp/MenuSelection';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
 const comingSoon = false;
 
@@ -26,6 +29,7 @@ const makeRouter = () => {
                 >
                     <Route path="guest" element={<PrimaryGuest />}/>
                     <Route path="party" element={<SecondaryGuests />}/>
+                    <Route path="menu" element={<MenuSelection />}/>
                 </Route>
             </>
         )
@@ -38,7 +42,9 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <RouterProvider router={makeRouter()} />
+            <PersistGate loading={null} persistor={persistStore(store)}>
+                <RouterProvider router={makeRouter()} />
+            </PersistGate>
         </Provider>
     );
 };

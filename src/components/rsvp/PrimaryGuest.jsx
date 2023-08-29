@@ -28,11 +28,10 @@ const PrimaryGuest = () => {
     const [ blockSubmissions, setBlockSubmissions ] = useState(false);
 
     const handleAttending = (values) => {
-        sessionStorage.removeItem('name');
 
         (async() => {
             try {
-                const { rsvp: dbRsvp, avail_guests, first_name, last_name } = await dispatch(fetchGuest({ firstName: values.firstName, lastName: values.lastName })).unwrap();
+                const { rsvp: dbRsvp, avail_guests, } = await dispatch(fetchGuest({ firstName: values.firstName, lastName: values.lastName })).unwrap();
 
                 if (dbRsvp !== 'PENDING') {
                     setSubmitError('Please contact Karly or Luis to update your RSVP');
@@ -46,7 +45,6 @@ const PrimaryGuest = () => {
                     setSubmitError('');
 
                     if (avail_guests > 0) {
-                        sessionStorage.setItem('name', JSON.stringify({ first_name, last_name }));
                         navigate('/rsvp/party');
                     }
                 }

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import * as api from '../../api';
+import * as api from '../../core/api';
 
 const initialState = {
     primaryGuest: {
@@ -11,6 +11,9 @@ const initialState = {
         rsvp: '',
         updated_at: ''
     },
+    secondaryGuests: [
+
+    ]
 };
 
 export const fetchGuest  = createAsyncThunk(
@@ -53,17 +56,21 @@ export const rsvpSlice = createSlice({
                 ...state.primaryGuest,
                 ...action.payload
             };
+        },
+        updateSecondaryGuests: (state, action) => {
+            state.secondaryGuests = [ ...action.payload ];
         }
     },
-    extraReducers: {
-        [fetchGuest.fulfilled]: (state, action)  => {
-            state.primaryGuest = { ...action.payload };
-        },
-        [updateGuest.fulfilled]: (state, action) => {
-            state.primaryGuest = { ...action.payload };
-        }
+    extraReducers: (builder) => {
+        builder
+            .addCase( fetchGuest.fulfilled, (state, action) => {
+                state.primaryGuest = { ...action.payload };
+            })
+            .addCase(updateGuest.fulfilled , (state, action) => {
+                state.primaryGuest = { ...action.payload };
+            });
     }
 });
 
-export const { updatePrimaryGuest } = rsvpSlice.actions;
+export const { updatePrimaryGuest, updateSecondaryGuests } = rsvpSlice.actions;
 export default rsvpSlice.reducer;

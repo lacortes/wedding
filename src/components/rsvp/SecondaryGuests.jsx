@@ -2,10 +2,11 @@ import { Disclosure, Switch } from '@headlessui/react';
 import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGuest } from '../../redux/slices/rsvpSlice';
+import { fetchGuest, updateSecondaryGuests } from '../../redux/slices/rsvpSlice';
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import NextButton from '../NextButton';
+import { useNavigate } from 'react-router-dom';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -41,6 +42,7 @@ const SecondaryGuests = () => {
         }
     } = useSelector(state => state.rsvp);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [ guests, setGuests ] = useState({ guests: [] });
 
     useEffect(() => {
@@ -62,8 +64,6 @@ const SecondaryGuests = () => {
         setGuests({ guests });
     }, [ avail_guests ]);
 
-    console.log('rerender');
-
     return (
         <div className="px-4 py-8 flex flex-col gap-6">
             <h1 className="font-cormorant text-2xl capitalize text-center">
@@ -79,7 +79,19 @@ const SecondaryGuests = () => {
                     enableReinitialize // Need this so formik can listen to initialValues changes
                     initialValues={guests}
                     validationSchema={schema}
-                    onSubmit={() => console.log('submit')}
+                    onSubmit={values => {
+                        const { guests } = values;
+
+                        const sanitized = guests.map(guest => ({
+                            ...guest,
+                            first_name: guest.first_name.trim().toLowerCase(),
+                            last_name: guest.last_name.trim().toLowerCase(),
+                        }));
+
+                        dispatch(updateSecondaryGuests(sanitized));
+                        navigate('/rsvp/menu');
+
+                    }}
                 >
                     {({ values, isValid, isSubmitting, touched, submitCount  }) => (
                         <Form>
