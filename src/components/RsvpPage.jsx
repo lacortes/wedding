@@ -1,6 +1,8 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const RsvpPage = () => {
+    const navigate = useNavigate();
+
     // eslint-disable-next-line no-unused-vars
     const steps = [
         { name: 'Step 1', href: '#', status: 'complete' },
@@ -17,7 +19,12 @@ const RsvpPage = () => {
                     style={{ backgroundImage: 'url(https://d2wkbwb7am42vh.cloudfront.net/rsvp-img.jpg)' }}
                 >
                     <div className="text-white text-xl md:text-2xl font-cormorant pl-4 pt-4">
-                        K &amp; L
+                        <button
+                            type="button"
+                            onClick={() => navigate('/')}
+                        >
+                            K &amp; L
+                        </button>
                     </div>
                     <h1 className="w-full text-center mt-12 text-white font-cormorant text-7xl backdrop-brightness-70">RSVP</h1>
 
