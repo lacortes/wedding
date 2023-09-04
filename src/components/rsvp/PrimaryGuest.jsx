@@ -43,12 +43,14 @@ const PrimaryGuest = () => {
                         rsvp: values.attending ? 'ATTENDING' :  'NOT_ATTENDING'
                     }));
                     setSubmitError('');
+                    setSubmitSuccess(true);
 
                     if (avail_guests > 0) {
                         navigate('/rsvp/party');
+                    } else {
+                        navigate('/rsvp/menu');
                     }
                 }
-                setSubmitSuccess(true);
 
             } catch (code) {
                 if (code === 404) {
