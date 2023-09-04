@@ -5,7 +5,23 @@
 @layer base {
     html {
         font-family: 'Open Sans', 'sans-serif';
-        background-color: #F4F7F6;
+        /*background-color: #F4F7F6;*/
+        background-color: #f6f4f2;
         @apply scroll-smooth;
+    }
+
+    h1,h2,h3,h4,h5,h6,p {
+        color: rgb(68, 68, 68);
+    }
+}
+
+.hero-image {
+    background-image: url("https://d2wkbwb7am42vh.cloudfront.net/hero-mobile.jpg");
+}
+
+@media (min-width: 768px) {
+    .hero-image {
+        background-image: url("https://d2wkbwb7am42vh.cloudfront.net/hero-standard.jpg");
+
     }
 }
