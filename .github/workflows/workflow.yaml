@@ -14,6 +14,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.9'
+      - name: Make Env
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_API_ROOT: "https://api.karlyluis.com"
+          file_name: .env.production
+          fail_on_empty: true
       - name: NPM Install
         run: |
           npm ci
