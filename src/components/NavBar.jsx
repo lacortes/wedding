@@ -13,11 +13,11 @@ const NavItems = ({ className, getDropdownHeight = () => {} }) => {
 
     return (
         <ul ref={elRef} className={className}>
-            <li className="py-2 text-white">
-                <a href="#dressCode"> Dress Code</a>
-            </li>
             <li className="py-2 text-white hover">
                 <a href="#location">Location</a>
+            </li>
+            <li className="py-2 text-white">
+                <a href="#faqs">FAQs</a>
             </li>
             <li className="py2 mb-3 mt-1">
                 <button

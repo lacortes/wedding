@@ -10,9 +10,9 @@ module.exports = {
     extend: {
       colors: {
         sage: {
-          light: '#B4DBB9',
-          DEFAULT: '#8AA88E',
-          dark: '#6D9272'
+          light: '#C4D4C7',
+          DEFAULT: '#A1BAA6',
+          dark: '#7DA183'
         },
         blush: {
           light: '#FAA5B6',
@@ -21,7 +21,13 @@ module.exports = {
         },
         ivory: {
           DEFAULT: '#F4F7F6'
-        }
+        },
+        champagne: {
+          DEFAULT: '#F2EBE3'
+        },
+        'light-gray': {
+          DEFAULT: 'rgb(68, 68, 68)'
+}
       },
       fontFamily: {
         'dancing-script': ['Dancing Script', 'cursive'],
