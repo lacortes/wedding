@@ -41,7 +41,7 @@ const faqs = [
 
 const Faqs = () => {
     return (
-        <setion id="faqs" className="h-screen bg-white">
+        <section id="faqs" className="h-screen bg-white">
             <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-40">
                 <div className="mx-auto max-w-4xl divide-y divide-gray-900/10">
                     <h1 className="font-cormorant font-extralight pb-12 text-4xl md:text-6xl text-center">Frequently Asked Questions</h1>
@@ -72,7 +72,7 @@ const Faqs = () => {
                     </dl>
                 </div>
             </div>
-        </setion>
+        </section>
     );
 };
 
