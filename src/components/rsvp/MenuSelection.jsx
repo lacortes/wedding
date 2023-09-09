@@ -67,19 +67,24 @@ const MenuSelection = () => {
 
     return (
         <div className="px-4 py-8 flex flex-col">
-            <h1 ref={titleRef} className="font-cormorant text-3xl capitalize text-center"> Menu Selection </h1>
+            <h1 ref={titleRef} className="font-cormorant font-semibold text-3xl leading-8 text-gray-900 capitalize text-center"> Menu </h1>
 
             <div className="w-full h-full flex flex-col gap-8 scroll-smooth mt-8 mb-8">
 
                 {menu.map(({ menuId, name, description,  }) => (
-                    <div key={menuId} className="w-full h-72 p-4 overflow-hidden bg-white sm:rounded-lg rounded-md shadow-lg">
+                    <div key={menuId} className="w-full h-64 p-4 overflow-hidden bg-white sm:rounded-lg rounded-md shadow-lg">
                         <div className="px-4 py-5 sm:p-6">
-                            <h2 className="capitalize text-2xl text-center">{name}</h2>
-                            <p className="mt-4 uppercase font-medium text-center text-gray-500">{description}</p>
+                            <h2 className="font-semibold leading-7 text-lg text-gray-900 capitalize text-center">{name}</h2>
+                            <p className="mt-4 uppercase text-center text-gray-500">{description}</p>
                         </div>
                     </div>
                 ))}
             </div>
+
+            <h2 className="font-semibold leading-7 text-lg text-gray-900">Menu Selection</h2>
+            <p className="leading-6 text-gray-600">
+                Select your preferred meal option
+            </p>
 
             <Formik
                 enableReinitialize
@@ -119,7 +124,7 @@ const MenuSelection = () => {
                                     {
                                         values.guests.map(({ first_name, last_name, selection, rsvp, ...rest }, index) => (
                                             <div className="mt-5" key={`${index}`}>
-                                                <h3 className="font-cormorant text-xl capitalize"> {first_name} {last_name} </h3>
+                                                <h3 className="capitalize"> {first_name} {last_name} </h3>
 
                                                 <RadioGroup
                                                     value={selection}
