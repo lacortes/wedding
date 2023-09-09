@@ -15,7 +15,7 @@ const schema = Yup.object({
         .required('Required'),
     lastName: Yup.string()
         .trim()
-        .matches(/[a-zA-Z]/, { message: 'Only letters' })
+        .matches(/[a-zA-Z]/, { message: 'Only letters allowed' })
         .min(3, 'Must be at least 3 letters')
         .required('Required'),
     attending: Yup.boolean().required('Required')
@@ -38,7 +38,10 @@ const PrimaryGuest = () => {
 
         (async() => {
             try {
-                const { rsvp: dbRsvp, avail_guests, } = await dispatch(fetchGuest({ firstName: values.firstName, lastName: values.lastName })).unwrap();
+                const { rsvp: dbRsvp, avail_guests, } = await dispatch(fetchGuest({
+                    firstName: values.firstName.toLowerCase(),
+                    lastName: values.lastName.toLowerCase()
+                })).unwrap();
 
                 if (dbRsvp !== 'PENDING') {
                     setSubmitError('Please contact Karly or Luis to update your RSVP');
@@ -46,8 +49,8 @@ const PrimaryGuest = () => {
                 } else if (values.attending === false) {
                     await dispatch(submitRsvp({
                         primaryGuest: {
-                            first_name: values.firstName,
-                            last_name: values.lastName,
+                            first_name: values.firstName.toLowerCase(),
+                            last_name: values.lastName.toLowerCase(),
                             rsvp: 'NOT_ATTENDING',
                             selection: 0
                         }
@@ -67,7 +70,7 @@ const PrimaryGuest = () => {
 
             } catch (code) {
                 if (code === 404) {
-                    setSubmitError('Cannot find your invitation!');
+                    setSubmitError(`Cannot find invitation for ${values.firstName} ${values.lastName}!`);
                 } else {
                     setSubmitError('Something went wrong!');
                 }
