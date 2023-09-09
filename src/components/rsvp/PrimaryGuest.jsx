@@ -3,8 +3,8 @@ import { ChevronDoubleRightIcon } from '@heroicons/react/24/outline';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { fetchGuest, updateGuest } from '../../redux/slices/rsvpSlice';
-import { useState } from 'react';
+import { fetchGuest, submitRsvp } from '../../redux/slices/rsvpSlice';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const schema = Yup.object({
@@ -26,6 +26,13 @@ const PrimaryGuest = () => {
     const [ submitError, setSubmitError ] = useState('');
     const [ submitSuccess, setSubmitSuccess ] = useState(false);
     const [ blockSubmissions, setBlockSubmissions ] = useState(false);
+    const errorRef = useRef();
+
+    useEffect(() => {
+        if (submitError) {
+            errorRef.current.scrollIntoView();
+        }
+    }, [ submitError ]);
 
     const handleAttending = (values) => {
 
@@ -36,12 +43,18 @@ const PrimaryGuest = () => {
                 if (dbRsvp !== 'PENDING') {
                     setSubmitError('Please contact Karly or Luis to update your RSVP');
                     setBlockSubmissions(true);
-                } else {
-                    await dispatch(updateGuest({
-                        firstName: values.firstName,
-                        lastName: values.lastName,
-                        rsvp: values.attending ? 'ATTENDING' :  'NOT_ATTENDING'
+                } else if (values.attending === false) {
+                    await dispatch(submitRsvp({
+                        primaryGuest: {
+                            first_name: values.firstName,
+                            last_name: values.lastName,
+                            rsvp: 'NOT_ATTENDING',
+                            selection: 0
+                        }
                     }));
+                    setSubmitError('');
+                    setSubmitSuccess(true);
+                } else {
                     setSubmitError('');
                     setSubmitSuccess(true);
 
@@ -54,7 +67,7 @@ const PrimaryGuest = () => {
 
             } catch (code) {
                 if (code === 404) {
-                    setSubmitError('Guest not found!');
+                    setSubmitError('Cannot find your invitation!');
                 } else {
                     setSubmitError('Something went wrong!');
                 }
@@ -188,33 +201,37 @@ const PrimaryGuest = () => {
                 </fieldset>
             </div>
 
-            {
-                values.attending ?
-                    (
-                        <button
-                            type="submit"
-                            className="flex justify-center items-center gap-x-2 rounded-md border-2 border-solid border-sage-dark
+            <div>
+                {
+                    values.attending ?
+                        (
+                            <button
+                                type="submit"
+                                className="w-full flex justify-center items-center gap-x-2 rounded-md border-2 border-solid border-sage-dark
                             px-3.5 py-2.5 text-sm font-semibold text-sage-dark shadow-sm hover:bg-sage-light hover:border-sage-light
                             hover:text-[#475E4A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                             focus-visible:outline-sage disabled:opacity-60"
-                            disabled={isSubmitting || blockSubmissions}
-                        >
+                                disabled={isSubmitting || blockSubmissions}
+                            >
                             Next
-                            <ChevronDoubleRightIcon className="-mr-0.5 h-5 w-5" aria-hidden="true"/>
-                        </button>
-                    )
-                    :
-                    (
-                        <button
-                            type="submit"
-                            className="block w-full rounded-md bg-sage-dark px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#475E4A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage disabled:opacity-60"
-                            disabled={isSubmitting || submitSuccess || blockSubmissions}
-                        >
-                            {submitSuccess ? 'Thank You!' : 'Submit' }
-                        </button>
-                    )
-            }
-            {submitError && <p className="pl-1 text-xs text-red-500">{submitError}</p>}
+                                <ChevronDoubleRightIcon className="-mr-0.5 h-5 w-5" aria-hidden="true"/>
+                            </button>
+                        )
+                        :
+                        (
+                            <button
+                                type="submit"
+                                className="block w-full rounded-md bg-sage-dark px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#475E4A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage disabled:opacity-60"
+                                disabled={isSubmitting || submitSuccess || blockSubmissions}
+                            >
+                                {submitSuccess ? 'Thank You!' : 'Submit' }
+                            </button>
+                        )
+                }
+                <div ref={errorRef}>
+                    {submitError && <p className="pl-1 pt-3 pb-8 text-xs text-red-500">{submitError}</p>}
+                </div>
+            </div>
         </form>
     );
 };

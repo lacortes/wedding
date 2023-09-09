@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const NavItems = ({ className, getDropdownHeight = () => {} }) => {
     const elRef = useRef();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (elRef.current.clientHeight > 0) {
@@ -19,14 +19,14 @@ const NavItems = ({ className, getDropdownHeight = () => {} }) => {
             <li className="py-2 text-white">
                 <a href="#faqs">FAQs</a>
             </li>
-            {/*<li className="py2 mb-3 mt-1">*/}
-            {/*    <button*/}
-            {/*        className="border-solid border-2 border-sage-light hover:bg-sage-light hover:text-black hover:rounded-md font-medium text-white tracking-widest rounded p-1 px-2 mb-3transition-all duration-300 ease-in"*/}
-            {/*        onClick={() => navigate('/rsvp/guest')}*/}
-            {/*    >*/}
-            {/*        RSVP*/}
-            {/*    </button>*/}
-            {/*</li>*/}
+            <li className="py2 mb-3 mt-1">
+                <button
+                    className="border-solid border-2 border-sage-light hover:bg-sage-light hover:text-black hover:rounded-md font-medium text-white tracking-widest rounded p-1 px-2 mb-3transition-all duration-300 ease-in"
+                    onClick={() => navigate('/rsvp/guest')}
+                >
+                    RSVP
+                </button>
+            </li>
         </ul>
     );
 };

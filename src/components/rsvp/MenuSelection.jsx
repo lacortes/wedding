@@ -1,8 +1,10 @@
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
 import { FieldArray, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { RadioGroup } from '@headlessui/react';
+import { resetGuest, submitRsvp } from '../../redux/slices/rsvpSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 const schema = Yup.object({
@@ -41,6 +43,10 @@ const MenuSelection = () => {
         secondaryGuests
     } = useSelector(state => state.rsvp);
     const [ guests, setGuests ] = useState({  guests: [] });
+    const titleRef = useRef();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [ errorMsg, setErrorMsg ] = useState('');
 
     useEffect(() => {
         const none = 0;
@@ -55,9 +61,13 @@ const MenuSelection = () => {
 
     }, [ primaryGuest, secondaryGuests ]);
 
+    useEffect(() => {
+        titleRef.current.scrollIntoView();
+    }, []);
+
     return (
         <div className="px-4 py-8 flex flex-col">
-            <h1 className="font-cormorant text-3xl capitalize text-center"> Menu Selection </h1>
+            <h1 ref={titleRef} className="font-cormorant text-3xl capitalize text-center"> Menu Selection </h1>
 
             <div className="w-full h-full flex flex-col gap-8 scroll-smooth mt-8 mb-8">
 
@@ -74,7 +84,31 @@ const MenuSelection = () => {
             <Formik
                 enableReinitialize
                 initialValues={guests}
-                onSubmit={(values) => console.log(values)}
+                onSubmit={({ guests }) => {
+                    const primaryGuest = guests.find(g => g?.guest_type === 'PRIMARY');
+                    if (!primaryGuest) {
+                        setErrorMsg('Something went wrong!');
+                        return;
+                    }
+
+                    primaryGuest.rsvp = 'ATTENDING';
+
+                    const party = guests.filter(g => g.guest_type === undefined);
+
+                    (async () => {
+
+                        try {
+                            await dispatch(submitRsvp({ primaryGuest, party  })).unwrap();
+                            dispatch(resetGuest());
+                            navigate('/thankyou', { replace: true });
+                        } catch (error) {
+                            console.error('Error', error.message);
+                            setErrorMsg('Something went wrong!');
+                        }
+
+                    })();
+
+                }}
                 validationSchema={schema}
             >
                 {({ values, isSubmitting }) => (
@@ -127,8 +161,15 @@ const MenuSelection = () => {
                             className="mt-10 block w-full rounded-md bg-sage-dark px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#475E4A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage disabled:opacity-60"
                             disabled={isSubmitting}
                         >
-                            Submit
+                            Submit RSVP
                         </button>
+
+                        {
+                            errorMsg && (
+                                <p className="pl-1 pt-3 pb-8 text-xs text-red-500">{errorMsg}</p>
+                            )
+                        }
+
                     </Form>
                 )}
             </Formik>

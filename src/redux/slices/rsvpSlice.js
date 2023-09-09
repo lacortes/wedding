@@ -31,19 +31,13 @@ export const fetchGuest  = createAsyncThunk(
     }
 );
 
-export const updateGuest = createAsyncThunk(
-    'rsvp/updateGuest',
-    async ({ firstName, lastName, rsvp }, { rejectWithValue }) => {
-        try {
-            const resp = await api.updateGuest({
-                firstName,
-                lastName,
-                rsvp
-            });
-            return resp.data;
-        } catch (error) {
-            return rejectWithValue(error.response.status);
-        }
+export const submitRsvp = createAsyncThunk(
+    'rsvp/submitRsvp',
+    async ({ primaryGuest, party }) => {
+        return api.submitRsvp({
+            primaryGuest,
+            party   
+        });
     }
 );
 
@@ -51,11 +45,9 @@ export const rsvpSlice = createSlice({
     name: 'rsvp',
     initialState,
     reducers: {
-        updatePrimaryGuest: (state, action) => {
-            state.primaryGuest = {
-                ...state.primaryGuest,
-                ...action.payload
-            };
+        resetGuest: (state) => {
+            state.primaryGuest = { ...initialState.primaryGuest };
+            state.secondaryGuests = [ ...initialState.secondaryGuests ];
         },
         updateSecondaryGuests: (state, action) => {
             state.secondaryGuests = [ ...action.payload ];
@@ -63,14 +55,11 @@ export const rsvpSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase( fetchGuest.fulfilled, (state, action) => {
-                state.primaryGuest = { ...action.payload };
-            })
-            .addCase(updateGuest.fulfilled , (state, action) => {
+            .addCase(fetchGuest.fulfilled, (state, action) => {
                 state.primaryGuest = { ...action.payload };
             });
     }
 });
 
-export const { updatePrimaryGuest, updateSecondaryGuests } = rsvpSlice.actions;
+export const { updateSecondaryGuests, resetGuest } = rsvpSlice.actions;
 export default rsvpSlice.reducer;
