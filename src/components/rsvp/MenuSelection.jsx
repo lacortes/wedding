@@ -17,12 +17,12 @@ const schema = Yup.object({
 const menu = [
     {
         menuId: 1,
-        name: 'Parmesan Chicken',
+        name: 'Gruyere Stuffed Parmesan Chicken',
         description: 'Grilled marinated chicken breast topped with tomato, basil, garlic, and olive oil'
     },
     {
         menuId: 2,
-        name: 'Harvest Roast',
+        name: 'Chef\'s Harvest Roast',
         description: 'USDA Choice beef stuffed with roasted garlic, infused with fresh rosemary & thyme, ' +
             'rubbed with whole grain mustard, and topped with a mediterranean style olive au jus sauce'
     }
