@@ -19,6 +19,10 @@
     background-image: url("https://d2wkbwb7am42vh.cloudfront.net/hero-mobile.jpg");
 }
 
+.success-img {
+    background-image: url("https://d2wkbwb7am42vh.cloudfront.net/bye-bouquet-mobile.jpg");
+}
+
 @media (min-width: 768px) {
     .hero-image {
         background-image: url("https://d2wkbwb7am42vh.cloudfront.net/hero-standard.jpg");

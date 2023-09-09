@@ -10,18 +10,17 @@ async function getGuest({ firstName, lastName }) {
     );
 }
 
-async function updateGuest({ firstName, lastName, rsvp }) {
-    return await api.put(
-        '/v1/guests',
+async function submitRsvp({ primaryGuest, party }) {
+    return await api.post(
+        '/v1/guests/rsvp',
         {
-            'first_name': firstName,
-            'last_name': lastName,
-            rsvp
+            'guest' :primaryGuest,
+            party
         }
     );
 }
 
 export {
     getGuest,
-    updateGuest
+    submitRsvp
 };

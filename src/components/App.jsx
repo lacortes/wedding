@@ -11,6 +11,7 @@ import SecondaryGuests from './rsvp/SecondaryGuests';
 import MenuSelection from './rsvp/MenuSelection';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import Success from './rsvp/Success';
 
 const comingSoon = false;
 
@@ -31,6 +32,10 @@ const makeRouter = () => {
                     <Route path="party" element={<SecondaryGuests />}/>
                     <Route path="menu" element={<MenuSelection />}/>
                 </Route>
+                <Route
+                    path="/thankyou"
+                    element={<Success />}
+                />
             </>
         )
     );
