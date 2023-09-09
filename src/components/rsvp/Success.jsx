@@ -16,9 +16,12 @@ const Success = () => {
             </nav>
             <div className="success-img w-full h-screen bg-center bg-contain bg-black">
                 <div
-                    className="w-full h-full flex-col flex gap-y-96 items-center justify-center">
-                    <h1 className="text-white text-6xl font-cormorant md:text-9xl md:mt-[20%]">Thank You</h1>
-                    <h1 className="text-white text-6xl font-cormorant md:text-9xl md:mt-[20%]">See you there!</h1>
+                    className="w-full h-full flex-col flex items-center justify-center">
+                    <h1 className="text-ivory text-7xl font-cormorant md:text-9xl md:mt-[20%]">Thank You</h1>
+                    <div className="w-full h-[45%]">
+                        {/*  empty */}
+                    </div>
+                    <h1 className="text-ivory text-5xl font-cormorant md:text-9xl md:mt-[20%] pb-10">See you there!</h1>
                 </div>
             </div>
         </div>
