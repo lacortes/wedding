@@ -19,13 +19,13 @@ const schema = Yup.object({
                 first_name: Yup.string()
                     .trim()
                     .matches(/^[a-zA-Z]*$/, { message: 'Only letters allowed' })
-                    .min(3, 'Must be at least 3 letters')
+                    .min(2, 'Must be at least 2 letters')
                     .max(10, 'Cannot exceed 10 letters')
                     .required('Required'),
                 last_name: Yup.string()
                     .trim()
                     .matches(/^[a-zA-Z]*$/, { message: 'Only letters allowed' })
-                    .min(3, 'Must be at least 3 letters')
+                    .min(2, 'Must be at least 2 letters')
                     .max(10, 'Cannot exceed 10 letters')
                     .required('Required'),
                 rsvp: Yup.string().required('Required')

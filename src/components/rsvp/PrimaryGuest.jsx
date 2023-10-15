@@ -11,12 +11,12 @@ const schema = Yup.object({
     firstName: Yup.string()
         .trim()
         .matches(/^[a-zA-Z]*$/, { message: 'Only letters allowed' })
-        .min(3)
+        .min(2, 'Must be at least 2 letters')
         .required('Required'),
     lastName: Yup.string()
         .trim()
         .matches(/[a-zA-Z]/, { message: 'Only letters allowed' })
-        .min(3, 'Must be at least 3 letters')
+        .min(2, 'Must be at least 2 letters')
         .required('Required'),
     attending: Yup.boolean().required('Required')
 });
