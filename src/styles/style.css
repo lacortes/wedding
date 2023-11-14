@@ -15,6 +15,10 @@
     }
 }
 
+#root {
+    position: relative;
+}
+
 .hero-image {
     background-image: url("https://d2wkbwb7am42vh.cloudfront.net/hero-mobile.jpg");
 }

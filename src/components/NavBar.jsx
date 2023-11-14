@@ -27,6 +27,11 @@ const NavItems = ({ className, getDropdownHeight = () => {} }) => {
                     RSVP
                 </button>
             </li>
+            <li className="py2 mb-3 mt-1">
+                <a href="https://www.zola.com/registry/luisandkarly2023"  className="py-2 text-white">
+                    Registry
+                </a>
+            </li>
         </ul>
     );
 };

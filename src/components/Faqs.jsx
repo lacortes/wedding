@@ -36,6 +36,10 @@ const faqs = [
     {
         question: 'Are children allowed?',
         answer: 'We are very sorry, but we are keeping our special day as an adult-only occasion. We are only able to accommodate the children of the immediate wedding party. We appreciate your understanding that our wedding day is an adult-only affair.'
+    },
+    {
+        question: 'Is there a registry?',
+        answer: 'Yes,<a className="underline ml-2" href="https://www.oliverwicks.com/article/semi-formal-wedding-attire#what-is-a-semi-formal-wedding-dress-code">here it is!</a>'
     }
 ];
 

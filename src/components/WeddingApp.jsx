@@ -45,9 +45,17 @@ const WeddingApp = () => {
             </section>
             <LocationSection />
             <Faqs />
-            <footer className="bg-sage-dark px-10 md:px-80 py-2 md:py-10">
+            <footer className="bg-sage-dark px-10 md:px-80 py-4 md:py-10">
                 <p className="text-ivory font-light text-xs md:text-sm">Made by Luis Cortes</p>
             </footer>
+            <button
+                type="button"
+                className="fixed bottom-4 left-4 rounded-full bg-blush-light p-2 text-white shadow-md drop-shadow-md hover:bg-blush-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-light"
+            >
+                <a href="https://www.zola.com/registry/luisandkarly2023"  className="py-2 text-white">
+                    Registry
+                </a>
+            </button>
         </>
     );
 };
